@@ -1205,9 +1205,11 @@ class FreeNASSshDriver extends ControllerZfsBaseDriver {
                 target = null;
                 if (
                   response.statusCode == 422 &&
-                  JSON.stringify(response.body).includes(
+                  (JSON.stringify(response.body).includes(
                     "Target name already exists"
-                  )
+                  ) || JSON.stringify(response.body).includes(
+                    "Target with this name already exists"
+                  ))
                 ) {
                   target = await this.findResourceByProperties(
                     "/iscsi/target",
